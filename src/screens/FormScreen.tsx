@@ -1,47 +1,36 @@
 import React, { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, Button } from "@chakra-ui/react";
 import CardComponent from "../components/CardComponent";
 import FormComponent from "../components/FormComponent";
-
-// Define the structure of the form's submitted data
-interface FormValues {
-  firstName: string;
-  lastName: string;
-  dateOfBirth: Date | null;
-  job: string;
-  bio: string;
-  city: string;
-  country: string;
-  long: string;
-  lat: string;
-}
+import { IPerson } from "../models/person";
 
 const FormScreen = () => {
   // State to manage the form's submitted data
-  const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
+  const [submittedData, setSubmittedData] = useState<IPerson | null>(null);
 
   // Handler to be called when the form is successfully submitted
-  const handleFormSubmit = (data: FormValues) => {
+  const handleFormSubmit = (data: IPerson) => {
     setSubmittedData(data);
   };
 
   return (
     <Box>
-      {submittedData ? (
-        <CardComponent
-          firstName={submittedData.firstName}
-          lastName={submittedData.lastName}
-          dateOfBirth={submittedData.dateOfBirth}
-          job={submittedData.job}
-          bio={submittedData.bio}
-          city={submittedData.city}
-          country={submittedData.country}
-          longitude={submittedData.long}
-          latitude={submittedData.lat}
-        />
-      ) : (
-        <FormComponent onFormSubmit={handleFormSubmit} />
-      )}
+      <Flex
+        direction={{ base: "row" }}
+        justifyContent={{ base: "center" }}
+        alignContent="center"
+      >
+        {submittedData ? (
+          <Box>
+            <CardComponent {...submittedData} />
+            <Button mt={4} colorScheme="teal" onClick={() => !submittedData}>
+              Go back
+            </Button>
+          </Box>
+        ) : (
+          <FormComponent onFormSubmit={handleFormSubmit} />
+        )}
+      </Flex>
     </Box>
   );
 };

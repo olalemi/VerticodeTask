@@ -1,50 +1,45 @@
 import React from "react";
-import { Box, Text, VStack, HStack, Badge } from "@chakra-ui/react";
+import { Box, Text, VStack, HStack } from "@chakra-ui/react";
+import {IPerson} from "../models/person";
 
-// Define the types for the props the CardComponent will accept
-interface CardProps {
-  firstName: string;
-  lastName: string;
-  dateOfBirth: Date | null;
-  job: string;
-  bio: string;
-  city: string;
-  country: string;
-  longitude: string;
-  latitude: string;
-}
 
-const CardComponent: React.FC<CardProps> = ({
+
+const CardComponent: React.FC<IPerson> = ({
   firstName,
   lastName,
   dateOfBirth,
   job,
   bio,
-  city,
-  country,
-  longitude,
-  latitude
+  location: { city, country, long, lat }
 }) => {
   // Format the date of birth to a readable format
   const dob = dateOfBirth ? dateOfBirth.toLocaleDateString() : "N/A";
 
   return (
-    <Box p={5} shadow="md" borderWidth="1px" borderRadius="md" width="sm">
+    <Box
+      p={5}
+      mt="200px"
+      shadow="md"
+      borderWidth="1px"
+      borderRadius="md"
+      width="sm"
+    >
       <VStack align="stretch" spacing={3}>
         <HStack justifyContent="space-between">
           <Text fontWeight="bold">
             {firstName} {lastName}
           </Text>
-          <Badge colorScheme="green">{job}</Badge>
         </HStack>
-        <Text color="gray.500">{dob}</Text>
-        <Text>{bio}</Text>
+        <Text colorScheme="green">Job: {job}</Text>
+
+        <Text color="gray.500">Date of Birth: {dob}</Text>
+        <Text>Bio: {bio}</Text>
         <Text>
-          {city}, {country}
+          Location: {city}, {country}
         </Text>
         <HStack justifyContent="space-between">
-          <Text>Longitude: {longitude}</Text>
-          <Text>Latitude: {latitude}</Text>
+          <Text>Longitude: {long}</Text>
+          <Text>Latitude: {lat}</Text>
         </HStack>
       </VStack>
     </Box>
