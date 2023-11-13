@@ -23,7 +23,7 @@ const FormScreen = () => {
         {submittedData ? (
           <Box>
             <CardComponent {...submittedData} />
-            <Button mt={4} colorScheme="teal" onClick={() => !submittedData}>
+            <Button mt={4} colorScheme="teal" onClick={() => setSubmittedData(null)} >
               Go back
             </Button>
           </Box>

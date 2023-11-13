@@ -1,8 +1,6 @@
 import React from "react";
 import { Box, Text, VStack, HStack } from "@chakra-ui/react";
-import {IPerson} from "../models/person";
-
-
+import { IPerson } from "../models/person";
 
 const CardComponent: React.FC<IPerson> = ({
   firstName,
@@ -10,7 +8,8 @@ const CardComponent: React.FC<IPerson> = ({
   dateOfBirth,
   job,
   bio,
-  location: { city, country, long, lat }
+  estimatedScore,
+  location: { city, country, long, lat },
 }) => {
   // Format the date of birth to a readable format
   const dob = dateOfBirth ? dateOfBirth.toLocaleDateString() : "N/A";
@@ -34,6 +33,8 @@ const CardComponent: React.FC<IPerson> = ({
 
         <Text color="gray.500">Date of Birth: {dob}</Text>
         <Text>Bio: {bio}</Text>
+        <Text>Estimated Score: {estimatedScore}</Text>
+
         <Text>
           Location: {city}, {country}
         </Text>

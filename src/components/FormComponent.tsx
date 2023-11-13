@@ -14,7 +14,7 @@ import {
   Button,
   useToast,
   Grid,
-  Text
+  Text,
 } from "@chakra-ui/react";
 
 interface CustomInputProps {
@@ -27,8 +27,18 @@ interface FormComponentProps {
 }
 // Validation schema
 const validationSchema = Yup.object({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("Last name is required"),
+  firstName: Yup.string()
+    .matches(
+      /^[A-Za-z]{4,}$/,
+      "First name must be at least 4 alphabetical letters",
+    )
+    .required("First name is required"),
+  lastName: Yup.string()
+    .matches(
+      /^[A-Za-z]{4,}$/,
+      "Last name must be at least 4 alphabetical letters",
+    )
+    .required("Last name is required"),
   dateOfBirth: Yup.date().required("Date of birth is required"),
   job: Yup.string().required("Job title is required"),
   bio: Yup.string().required("Bio is required"),
@@ -36,8 +46,8 @@ const validationSchema = Yup.object({
     city: Yup.string().required("City is required"),
     country: Yup.string().required("Country is required"),
     long: Yup.string().required("Longitude is required"),
-    lat: Yup.string().required("Latitude is required")
-  })
+    lat: Yup.string().required("Latitude is required"),
+  }),
 });
 
 const calculateEstimatedScore = (): number => {
@@ -58,8 +68,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ onFormSubmit }) => {
         city: "",
         country: "",
         long: "",
-        lat: ""
-      }
+        lat: "",
+      },
     },
     validationSchema,
     onSubmit: (values, { resetForm }) => {
@@ -69,7 +79,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onFormSubmit }) => {
         ...values,
         dateOfBirth: values.dateOfBirth || new Date(), // Provide a default date if null
         estimatedScore,
-        location: values.location as ILocation
+        location: values.location as ILocation,
       };
 
       onFormSubmit(personData);
@@ -78,9 +88,9 @@ const FormComponent: React.FC<FormComponentProps> = ({ onFormSubmit }) => {
         title: "Form submitted successfully!",
         status: "success",
         duration: 2000,
-        isClosable: true
+        isClosable: true,
       });
-    }
+    },
   });
 
   // Custom DatePicker input
